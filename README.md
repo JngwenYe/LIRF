@@ -1,7 +1,16 @@
+# Learning with Recoverable Forgetting
+
+
+["Learning with Recoverable Forgetting"](https://arxiv.org/)
+
+Jingwen Ye, Yifang Fu, Jie Song, Xingyi Yang, Songhua Liu, Xin Jin, Mingli Song, Xinchao Wang
+
+In ECCV 2022 
+
 
 ## Overview 
 
-* We propose the concept of **LIRF**. This code doesn't include the network pruning. The full code will be updated as soon as this paper is published.
+* We propose the concept of **LIRF**. This code doesn't include the network pruning. The full code will be updated later.
 
 
 ## Prerequisite
