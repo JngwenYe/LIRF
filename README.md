@@ -8,7 +8,7 @@ Jingwen Ye, Yifang Fu, Jie Song, Xingyi Yang, Songhua Liu, Xin Jin, Mingli Song,
 In ECCV 2022 
 
 
-![deposit](./eccv-md/deposit.png)
+![deposit](./deposit.png)
 
 ## Overview 
 
