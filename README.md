@@ -8,6 +8,8 @@ Jingwen Ye, Yifang Fu, Jie Song, Xingyi Yang, Songhua Liu, Xin Jin, Mingli Song,
 In ECCV 2022 
 
 
+![deposit](./eccv-md/deposit.png)
+
 ## Overview 
 
 * We propose the concept of **LIRF**. This code doesn't include the network pruning. The full code will be updated later.
