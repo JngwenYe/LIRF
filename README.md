@@ -1,7 +1,7 @@
 # Learning with Recoverable Forgetting
 
 
-["Learning with Recoverable Forgetting"](https://arxiv.org/)
+["Learning with Recoverable Forgetting"](https://arxiv.org/abs/2207.08224)
 
 Jingwen Ye, Yifang Fu, Jie Song, Xingyi Yang, Songhua Liu, Xin Jin, Mingli Song, Xinchao Wang
 
@@ -46,7 +46,4 @@ python train_deposit.py --save_path [XXX]
 
 
 
-
-## Acknowledgement
-* [Nasty Teacher](https://github.com/VITA-Group/Nasty-Teacher)
 
