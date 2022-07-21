@@ -1,0 +1,139 @@
+<div align="center"> 
+
+# Learning with Recoverable Forgetting （ECCV 2022）
+
+[Jingwen Ye](https://scholar.google.com/citations?user=8GQnNP0AAAAJ&hl=en),
+Yifang Fu,
+[Jie Song](https://scholar.google.com/citations?hl=en&user=4OjO-WYAAAAJ),
+[Xingyi Yang](https://scholar.google.com/citations?hl=en&user=oCqKAnsAAAAJ),
+[Songhua Liu](https://scholar.google.com/citations?user=AnYh2rAAAAAJ&hl=en&oi=ao),
+[Xin Jin](https://scholar.google.com/citations?user=byaSC-kAAAAJ&hl=en&oi=sra),
+[Mingli Song](https://scholar.google.com/citations?hl=en&user=7oLbhAwAAAAJ)
+and [Xinchao Wang](https://scholar.google.com/citations?user=w69Buq0AAAAJ&hl=en&oi=ao)
+
+[[Arxiv]](https://arxiv.org/abs/2207.08224)
+
+</div>
+
+This repository is an official PyTorch implementation of the paper
+[**『 Learning with Recoverable Forgetting 』**](https://arxiv.org/abs/2207.08224).
+It provides a framework for knowledge deposit and withdraw.
+
+![deposit](./eccv-md/deposit.png)
+
+If you use the code/model/results of this repository please cite:
+```
+@inproceedings{Ye2022LearningWR,
+  author  = Jingwen Ye and Yifang Fu and Jie Song and Xingyi Yang and Songhua Liu and Xin Jin and Mingli Song and Xinchao Wang},
+  title   = {Learning with Recoverable Forgetting},
+  booktitle = {ECCV},
+  Year  = {2022}
+}
+```
+
+
+
+
+
+## Overview 
+-  We introduce the problem setting for recoverable knowledge forgetting, which resembles the real-world scenarios more flexibly and closely for data privacy dynamic request in deep models as compared to the existing state-of-the-art life-long learning or machine unlearning settings.
+
+- We develop the LIRF framework with data efficiency and training efficiency, where the whole framework doesn't need to access the preserved old data and only needs a few epochs to finetune in the deposit process.
+
+![title](./eccv-md/goal.png)
+
+&emsp;
+
+## Problem Definition
+
+ LIRF consists of two processes, one is  <font color="#0000dd">**knowledge deposit**</font> that transfers knowledge from original network to target network and deposit module; the other is  <font color="#0000dd"> **knowledge withdrawal** </font> that recovers the knowledge back to the recover net.
+These two processes can be described as:
+$$
+    \mathcal{T}_0\xrightarrow[\mathcal{D}_r]{\text{Deposit}} \{\mathcal{T}, \mathcal{T}_r\}\xrightarrow{\text{Withdraw}}  \widetilde{{\mathcal{T}}},$$
+where 
+- $\mathcal{T}_0$ is the original network trained on the full set $\mathcal{D}$;
+-  $\mathcal{T}$ is the target network specified for the preservation set $\overline{\mathcal{D}}_r$;
+-  $\mathcal{T}_r$ is the deposit module that only works as a knowledge container;
+-  $\widetilde{{\mathcal{T}}}$ is the recover network that recovers all the prediction capacity of the full data set $\mathcal{D}$. 
+
+
+
+**Definition 1** (Deposit Problem). The Learning with knowledge deposit problem is defined as follows:
+Learn two models, one is the target network $\mathcal{T}:\mathcal{X}\rightarrow\mathcal{Y}$  that should map an input $x$ to its correct class label $y$ if $x\subset\overline{\mathcal{D}}_r$, while map $x$ to a wrong class label if $x\subset\mathcal{D}_r$; the other one is $\mathcal{T}_r:\mathcal{X}\rightarrow\mathcal{F}$ that stores the knowledge of set $\mathcal{D}_r$. 
+
+*Constraints*: Only the original network $\mathcal{T}_0$ and deposit set $\mathcal{D}_r$ are available.
+
+**Definition 2** (Withdraw Problem). The Learning with knowledge withdraw problem is defined as follows:
+Recover a model $\widetilde{{\mathcal{T}}}:\mathcal{X}\rightarrow\mathcal{Y}$  that should map an input $x$ to its correct class label $y$ for both $x\subset{\mathcal{D}}_r$, and $x\subset\overline{\mathcal{D}}_r$. 
+
+*Constraints*: Only the target network $\mathcal{T}$ and deposit module $\mathcal{T}_r$ are available.
+
+&emsp;
+
+## Prerequisite
+We use Pytorch 1.4.0, and CUDA 10.1. You can install them with  
+~~~
+conda install pytorch=1.4.0 torchvision=0.5.0 cudatoolkit=10.1 -c pytorch
+~~~   
+It should also be applicable to other Pytorch and CUDA versions.  
+
+
+Then install other packages by
+~~~
+pip install -r requirements.txt
+~~~
+
+
+
+## Usage 
+
+- Step 1: Download the dataset and partion it into the deposit set and preservation set
+
+- Step 2: Train the original network   
+
+~~~
+python train_scratch-2.py --save_path [XXX]
+~~~
+
+
+
+- Step 3: Train LIRF with the deposit set
+~~~
+python train_deposit.py --save_path [XXX]
+~~~
+
+
+## Results
+
+### 1. Overall performance on CIFAR-10
+
+| Dataset | Metrics|Original| Deposit| Withdrawal|
+|:--------:	|:-----:	|:-----:	|:-----:	|:-----:	|
+CIFAR-10| Pre Acc.$\uparrow$    |  93.77  |   93.41 | 94.56|
+CIFAR-10| Dep Acc.   | 94.60 |  15.00 | 97.92        |
+CIFAR-10| F$\uparrow$   |  0  |  79.60 |-   |  
+CIFAR-10| H Mean $\uparrow$ | 0  |   85.95|-  |
+CIFAR-10| Avg Acc. $\uparrow$  |  94.06 |  - |95.57  |
+CUB200-2011| Pre Acc.$\uparrow$   |  50.33 | 51.64| 53.21|
+
+### 2. Overall performance on CUB200-2011
+| Dataset | Metrics|Original| Deposit| Withdrawal|
+|:--------:	|:-----:	|:-----:	|:-----:	|:-----:	|
+CUB200-2011| Dep Acc.  |  48.60 | 1.18  | 55.89 |
+CUB200-2011| F$\uparrow$ | 0  |   47.42|- |
+CUB200-2011| H Mean $\uparrow$ |0  |49.44 |- |
+CUB200-2011| Avg Acc. $\uparrow$ | 49.81| - |54.01|
+
+### 3. The visualization of the t-SNE plots
+
+The features on the final layer of original net, target net and recover net are visualized. 
+
+![title](./eccv-md/tsne.png)
+
+## Contact
+
+If you have any problem about our code, feel free to contact
+
+- [jingweny@nus.edu.sg](mailto:jingweny@nus.edu.sg)
+
+or describe your problem in Issues.
