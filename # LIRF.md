@@ -148,6 +148,7 @@ $$
 $$
 \mathcal{L}_ {kp} = \mathcal{L}_ {kd}\big( g(\frac{z_ {\mathcal{T}}(x)}{T}),g(\frac{z_ {\mathcal{T}_ {0}}(x)}{T}) \big),
 $$
+
 公式中，过滤器 $g$ 起到选择保留集对应的类别标签的 logits 的效果。
 
 &emsp;
@@ -163,6 +164,7 @@ $$
 $$
 \mathcal{L}_ {pt} = \mathcal{L}_ {kd}\big(\overline{g}(\frac{z_ {\mathcal{T}_ r\circ\mathcal{T}^{(n-)}}(x)}{T}),\overline{g}(\frac{z_ {\mathcal{T}_ {0}}(x)}{T})\big), 
 $$
+
 公式中，过滤器 $\overline{g}$ 起到选择存储集对应的类别标签的 logits的效果。
 
 &emsp;
@@ -172,6 +174,7 @@ $$
 $$
 \mathcal{L}_ {re} = \mathcal{L}_ {ce}\big(\widetilde{{\mathcal{T}}}(x),y\big),
 $$
+
 在这里，得到的存储模块只用于知识的存储，不能用作独立的预测模型。 因此，敏感知识存储在 $\mathcal{T}_ r$ 中比保留原始图像更为安全。
 
 &emsp;
@@ -187,11 +190,13 @@ $$
 $$
 \widetilde{{\mathcal{T}}}(x)=g\big (\mathcal{T}(x)\big)+ \overline{g}\big ( \mathcal{T}_ r\circ\mathcal{T}^{(n-)}(x)\big),
 $$
+
 过滤函数 $g$ 和 $\overline{g}$ 与之前的定义一致。因此训练 LIRF 的损失函数可以表示为各损失项的加权相加：
 
 $$
 \mathcal{L}_ {all}= \mathcal{L}_ {kr}+\lambda_ {kp}\mathcal{L}_ {kp}+\lambda_ {re}\mathcal{L}_ {re}+\lambda_ {pt}\mathcal{L}_ {pt},
 $$
+
 LIRF 通过在存储集 $\mathcal{D}_ r$ 上的 $\mathcal{L}_ {all}$ 进行网络微调，保留集 $\overline{\mathcal{D}}_ r$ 全程不参与网络更新。
 
 &emsp;
