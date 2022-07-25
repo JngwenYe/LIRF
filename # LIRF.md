@@ -94,7 +94,7 @@ $$
 **定义一 【存储任务 Deposit】：** 
 输出两个模型，一为目标网络 $\mathcal{T}:\mathcal{X}\rightarrow\mathcal{Y}$，对于保留集中的数据 $x\subset\overline{\mathcal{D}}_ r$, 目标网络将输入 $x$ 映射到其正确的类别标签 $y$，对于存储集中的数据 $x\subset\mathcal{D}_ r$，目标网络将输入 $x$ 映射到错误的类别标签；二为存储模块 $\mathcal{T}_ r:\mathcal{X}\rightarrow\mathcal{F}$，用于存储集合 $\mathcal{D}_ r$ 的知识。 
 
-*限制条件：只有原始网络 $\mathcal{T}_ 0$ 和存储集 $\mathcal{D}_ r$ 可供使用。*
+*限制条件*：只有原始网络 $\mathcal{T}_ 0$ 和存储集 $\mathcal{D}_ r$ 可供使用。
 
 &emsp;
 
@@ -102,7 +102,7 @@ $$
 输出复原网络 $\widetilde{{\mathcal{T}}}:\mathcal{X}\rightarrow\mathcal{Y}$。
 对于所有数据 $x\subset\mathcal{D}$，复原网络将输入 $x$ 映射到其正确的类标签 $y$。
 
-*限制条件：只有目标网络 $\mathcal{T}$ 和存款模块 $\mathcal{T}_ r$ 可供使用。*
+*限制条件*：只有目标网络 $\mathcal{T}$ 和存款模块 $\mathcal{T}_ r$ 可供使用。
 
 &emsp;
 
