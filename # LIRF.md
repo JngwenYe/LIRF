@@ -30,7 +30,6 @@
 
 ![deposit](./eccv-md/deposit.png)
 
-![deposit](https://github.com/JngwenYe/LIRF/blob/main/eccv-md/brain.png)
 
 <div align='center'> 
 
