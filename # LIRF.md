@@ -143,7 +143,7 @@ $$\mathcal{L}_ {kr}= \mathcal{L}_ {ce}\big(\mathcal{T}(x),y_ r\big)-\lambda_ {at
 由于目标网络 $\mathcal{T}$ 由原始网络初始化得，并且目标网络 $\mathcal{T}$ 的深层模块在微调时保持参数固定，因此部分知识已完成从 $\mathcal{T}_ 0^{(n-)}$ 到 $\mathcal{T}^{(n-)}$ 的迁移。
 除此之外，作者提出了基于滤波器 $g$ 的知识迁移，以防止在保留集 $\overline{\mathcal{D}}_ r$ 上的灾难性遗忘，即：
 $$
-    \mathcal{L}_ {kp} = \mathcal{L}_ {kd}\big(g(\frac{z_ {\mathcal{T}}(x)}{T}),g(\frac{z_ {\mathcal{T}_ {0}}(x)}{T})\big),
+    \mathcal{L}_ {kp} = \mathcal{L}_ {kd}\big( g(\frac{z_ {\mathcal{T}}(x)}{T}),g(\frac{z_ {\mathcal{T}_ {0}}(x)}{T})\big),
 $$
 公式中，过滤器 $g$ 起到选择保留集对应的类别标签的 logits的效果。
 
