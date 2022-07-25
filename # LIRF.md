@@ -85,7 +85,7 @@
 
 
 $$
-\mathcal{T}_0\xrightarrow[\mathcal{D}_ r]{\text{Deposit}} \{\mathcal{T}, \mathcal{T}_ r\}\xrightarrow{\text{Withdraw}}  \widetilde{{\mathcal{T}}}
+\mathcal{T}_ 0\xrightarrow[\mathcal{D}_ r]{\text{Deposit}} \{\mathcal{T}, \mathcal{T}_ r\}\xrightarrow{\text{Withdraw}}  \widetilde{{\mathcal{T}}}
 $$
 
 
@@ -132,7 +132,7 @@ $$
 
 对于每个存储集的输入 $x\subset \mathcal{D}_ r$，作者对其分配一个随机标签 $y_ r$，以此微调目标网络 $\mathcal{T}$，使得目标网络在存储集上做出错误预测结构。
 于此同时，作者最大化了目标网络和原始网络浅层模块中间特征的注意力图，用以消除该部分知识的可蒸馏性。该部分损失表示为：
-$$\mathcal{L}_ {kr}= \mathcal{L}_ {ce}\big(\mathcal{T}(x),y_r\big)-\lambda_{at} \mathcal{L}_ {at}\big(\mathcal{T}^{(-n)}(x),\mathcal{T}_ 0^{(-n)}(x)\big)$$
+$$\mathcal{L}_ {kr}= \mathcal{L}_ {ce}\big(\mathcal{T}(x),y_ r\big)-\lambda_ {at} \mathcal{L}_ {at}\big(\mathcal{T}^{(-n)}(x),\mathcal{T}_ 0^{(-n)}(x)\big)$$
 
 &emsp;
 
@@ -155,7 +155,7 @@ $$
 
 &emsp;
 
-为了减小存储模块的参数规模，作者使用剪枝后的原始网络初始化存款模块 $\mathcal{T}_r$。此外，作者使用基于过滤器 $\overline{g}$ 的损失函数 $\mathcal{L}_{pt}$ 进行部分知识转移：
+为了减小存储模块的参数规模，作者使用剪枝后的原始网络初始化存款模块 $\mathcal{T}_ r$。此外，作者使用基于过滤器 $\overline{g}$ 的损失函数 $\mathcal{L}_ {pt}$ 进行部分知识转移：
 $$
     \mathcal{L}_ {pt} = \mathcal{L}_ {kd}\big(\overline{g}(\frac{z_ {\mathcal{T}_ r\circ\mathcal{T}^{(n-)}}(x)}{T}),\overline{g}(\frac{z_ {\mathcal{T}_ {0}}(x)}{T})\big), 
 $$
@@ -184,7 +184,7 @@ $$
 $$
 过滤函数 $g$ 和 $\overline{g}$ 与之前的定义一致。因此训练 LIRF 的损失函数可以表示为各损失项的加权相加：
 $$
-\mathcal{L}_ {all}= \mathcal{L}_{kr}+\lambda_{kp}\mathcal{L}_ {kp}+\lambda_{re}\mathcal{L}_ {re}+\lambda_ {pt}\mathcal{L}_ {pt},
+\mathcal{L}_ {all}= \mathcal{L}_ {kr}+\lambda_ {kp}\mathcal{L}_ {kp}+\lambda_ {re}\mathcal{L}_ {re}+\lambda_ {pt}\mathcal{L}_ {pt},
 $$
 LIRF 通过在存储集 $\mathcal{D}_ r$ 上的 $\mathcal{L}_ {all}$ 进行网络微调，保留集 $\overline{\mathcal{D}}_ r$ 全程不参与网络更新。
 
