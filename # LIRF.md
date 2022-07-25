@@ -131,7 +131,9 @@ $$
 
 对于每个存储集的输入 $x\subset \mathcal{D}_ r$，作者对其分配一个随机标签 $y_ r$，以此微调目标网络 $\mathcal{T}$，使得目标网络在存储集上做出错误预测结构。
 于此同时，作者最大化了目标网络和原始网络浅层模块中间特征的注意力图，用以消除该部分知识的可蒸馏性。该部分损失表示为：
-$$\mathcal{L}_ {kr}= \mathcal{L}_ {ce}\big(\mathcal{T}(x),y_ r\big)-\lambda_ {at} \mathcal{L}_ {at}\big(\mathcal{T}^{(-n)}(x),\mathcal{T}_ 0^{(-n)}(x)\big)$$
+$$
+      \mathcal{L}_ {kr}= \mathcal{L}_ {ce}\big(\mathcal{T}(x),y_ r\big)-\lambda_ {at} \mathcal{L}_ {at}\big(\mathcal{T}^{(-n)}(x),\mathcal{T}_ 0^{(-n)}(x)\big)
+$$
 
 &emsp;
 
@@ -142,9 +144,9 @@ $$\mathcal{L}_ {kr}= \mathcal{L}_ {ce}\big(\mathcal{T}(x),y_ r\big)-\lambda_ {at
 由于目标网络 $\mathcal{T}$ 由原始网络初始化得，并且目标网络 $\mathcal{T}$ 的深层模块在微调时保持参数固定，因此部分知识已完成从 $\mathcal{T}_ 0^{(n-)}$ 到 $\mathcal{T}^{(n-)}$ 的迁移。
 除此之外，作者提出了基于滤波器 $g$ 的知识迁移，以防止在保留集 $\overline{\mathcal{D}}_ r$ 上的灾难性遗忘，即：
 $$
-    \mathcal{L}_ {kp} = \mathcal{L}_ {kd}\big( g(\frac{z_ {\mathcal{T}}(x)}{T}),g(\frac{z_ {\mathcal{T}_ {0}}(x)}{T})\big),
+    \mathcal{L}_ {kp} = \mathcal{L}_ {kd}\big( g(\frac{z_ {\mathcal{T}}(x)}{T}),g(\frac{z_ {\mathcal{T}_ {0}}(x)}{T}) \big),
 $$
-公式中，过滤器 $g$ 起到选择保留集对应的类别标签的 logits的效果。
+公式中，过滤器 $g$ 起到选择保留集对应的类别标签的 logits 的效果。
 
 &emsp;
 
