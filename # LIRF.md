@@ -131,8 +131,9 @@ $$
 
 对于每个存储集的输入 $x\subset \mathcal{D}_ r$，作者对其分配一个随机标签 $y_ r$，以此微调目标网络 $\mathcal{T}$，使得目标网络在存储集上做出错误预测结构。
 于此同时，作者最大化了目标网络和原始网络浅层模块中间特征的注意力图，用以消除该部分知识的可蒸馏性。该部分损失表示为：
+
 $$
-      \mathcal{L}_ {kr}= \mathcal{L}_ {ce}\big(\mathcal{T}(x),y_ r\big)-\lambda_ {at} \mathcal{L}_ {at}\big(\mathcal{T}^{(-n)}(x),\mathcal{T}_ 0^{(-n)}(x)\big)
+\mathcal{L}_ {kr}= \mathcal{L}_ {ce}\big(\mathcal{T}(x),y_ r\big)-\lambda_ {at} \mathcal{L}_ {at}\big(\mathcal{T}^{(-n)}(x),\mathcal{T}_ 0^{(-n)}(x)\big)
 $$
 
 &emsp;
@@ -143,8 +144,9 @@ $$
 
 由于目标网络 $\mathcal{T}$ 由原始网络初始化得，并且目标网络 $\mathcal{T}$ 的深层模块在微调时保持参数固定，因此部分知识已完成从 $\mathcal{T}_ 0^{(n-)}$ 到 $\mathcal{T}^{(n-)}$ 的迁移。
 除此之外，作者提出了基于滤波器 $g$ 的知识迁移，以防止在保留集 $\overline{\mathcal{D}}_ r$ 上的灾难性遗忘，即：
+
 $$
-    \mathcal{L}_ {kp} = \mathcal{L}_ {kd}\big( g(\frac{z_ {\mathcal{T}}(x)}{T}),g(\frac{z_ {\mathcal{T}_ {0}}(x)}{T}) \big),
+\mathcal{L}_ {kp} = \mathcal{L}_ {kd}\big( g(\frac{z_ {\mathcal{T}}(x)}{T}),g(\frac{z_ {\mathcal{T}_ {0}}(x)}{T}) \big),
 $$
 公式中，过滤器 $g$ 起到选择保留集对应的类别标签的 logits 的效果。
 
@@ -157,14 +159,16 @@ $$
 &emsp;
 
 为了减小存储模块的参数规模，作者使用剪枝后的原始网络初始化存款模块 $\mathcal{T}_ r$。此外，作者使用基于过滤器 $\overline{g}$ 的损失函数 $\mathcal{L}_ {pt}$ 进行部分知识转移：
+
 $$
-    \mathcal{L}_ {pt} = \mathcal{L}_ {kd}\big(\overline{g}(\frac{z_ {\mathcal{T}_ r\circ\mathcal{T}^{(n-)}}(x)}{T}),\overline{g}(\frac{z_ {\mathcal{T}_ {0}}(x)}{T})\big), 
+\mathcal{L}_ {pt} = \mathcal{L}_ {kd}\big(\overline{g}(\frac{z_ {\mathcal{T}_ r\circ\mathcal{T}^{(n-)}}(x)}{T}),\overline{g}(\frac{z_ {\mathcal{T}_ {0}}(x)}{T})\big), 
 $$
 公式中，过滤器 $\overline{g}$ 起到选择存储集对应的类别标签的 logits的效果。
 
 &emsp;
 
 通过最小化损失 $\mathcal{L}_ {pt}$，可以将特定样本的知识转移到存储模块。同时为了确保存储的知识易于后续的恢复操作，作者进一步微调存储模块 $\mathcal{T}_ r$，使其 easy-to-withdraw。这意味着对于恢复网络 $\widetilde{{\mathcal{T}}}$，知识是可恢复的。因此，在进行知识存储的同时，作者提前考虑其在复原网络 $\mathcal{L}_ {re}$ 上的可恢复性。具体来说，额外引入了与复原网络相关的损失项：
+
 $$
 \mathcal{L}_ {re} = \mathcal{L}_ {ce}\big(\widetilde{{\mathcal{T}}}(x),y\big),
 $$
@@ -184,6 +188,7 @@ $$
 \widetilde{{\mathcal{T}}}(x)=g\big (\mathcal{T}(x)\big)+ \overline{g}\big ( \mathcal{T}_ r\circ\mathcal{T}^{(n-)}(x)\big),
 $$
 过滤函数 $g$ 和 $\overline{g}$ 与之前的定义一致。因此训练 LIRF 的损失函数可以表示为各损失项的加权相加：
+
 $$
 \mathcal{L}_ {all}= \mathcal{L}_ {kr}+\lambda_ {kp}\mathcal{L}_ {kp}+\lambda_ {re}\mathcal{L}_ {re}+\lambda_ {pt}\mathcal{L}_ {pt},
 $$
