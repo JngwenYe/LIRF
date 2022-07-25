@@ -71,9 +71,9 @@
 
 
 
-知识的存取定义如下图所示，$\mathcal{D}$ 表示包含敏感数据的完整数据集，直接在 $\mathcal{D}$ 上训练的原始网络表示为 $\mathcal{T}_0$。
+知识的存取定义如下图所示，$\mathcal{D}$ 表示包含敏感数据的完整数据集，直接在 $\mathcal{D}$ 上训练的原始网络表示为 $\mathcal{T}_ 0$。
 将原始数据集 $\mathcal{D}$ 划分为存储集和保留集，其中，
-存储集 $\mathcal{D}_r$ 的知识在目标网络 $\mathcal{T}$ 被删除，并保留在在存款模块 $\mathcal{T}_r$ 中；保留集 $\overline{\mathcal{D}}_r$ 为 $\mathcal{D}_r$ 的补集。
+存储集 $\mathcal{D}_ r$ 的知识在目标网络 $\mathcal{T}$ 被删除，并保留在在存款模块 $\mathcal{T}_ r$ 中；保留集 $\overline{\mathcal{D}}_ r$ 为 $\mathcal{D}_ r$ 的补集。
 
 &emsp;
 
@@ -85,16 +85,16 @@
 
 
 $$
-\mathcal{T}_0\xrightarrow[\mathcal{D}_r]{\text{Deposit}} \{\mathcal{T}, \mathcal{T}_r\}\xrightarrow{\text{Withdraw}}  \widetilde{{\mathcal{T}}}
+\mathcal{T}_0\xrightarrow[\mathcal{D}_ r]{\text{Deposit}} \{\mathcal{T}, \mathcal{T}_ r\}\xrightarrow{\text{Withdraw}}  \widetilde{{\mathcal{T}}}
 $$
 
 
 &emsp;
 
 **定义一 【存储任务 Deposit】：** 
-输出两个模型，一为目标网络 $\mathcal{T}:\mathcal{X}\rightarrow\mathcal{Y}$，对于保留集中的数据 $x\subset\overline{\mathcal{D}}_r$, 目标网络将输入 $x$ 映射到其正确的类别标签 $y$，对于存储集中的数据 $x\subset\mathcal{D}_r$，目标网络将输入 $x$ 映射到错误的类别标签；二为存储模块 $\mathcal{T}_r:\mathcal{X}\rightarrow\mathcal{F}$，用于存储集合 $\mathcal{D}_r$ 的知识。 
+输出两个模型，一为目标网络 $\mathcal{T}:\mathcal{X}\rightarrow\mathcal{Y}$，对于保留集中的数据 $x\subset\overline{\mathcal{D}}_ r$, 目标网络将输入 $x$ 映射到其正确的类别标签 $y$，对于存储集中的数据 $x\subset\mathcal{D}_ r$，目标网络将输入 $x$ 映射到错误的类别标签；二为存储模块 $\mathcal{T}_ r:\mathcal{X}\rightarrow\mathcal{F}$，用于存储集合 $\mathcal{D}_ r$ 的知识。 
 
-*限制条件：只有原始网络 $\mathcal{T}_0$ 和存储集 $\mathcal{D}_r$ 可供使用。*
+*限制条件：只有原始网络 $\mathcal{T}_ 0$ 和存储集 $\mathcal{D}_ r$ 可供使用。*
 
 &emsp;
 
@@ -102,7 +102,7 @@ $$
 输出复原网络 $\widetilde{{\mathcal{T}}}:\mathcal{X}\rightarrow\mathcal{Y}$。
 对于所有数据 $x\subset\mathcal{D}$，复原网络将输入 $x$ 映射到其正确的类标签 $y$。
 
-*限制条件：只有目标网络 $\mathcal{T}$ 和存款模块 $\mathcal{T}_r$ 可供使用。*
+*限制条件：只有目标网络 $\mathcal{T}$ 和存款模块 $\mathcal{T}_ r$ 可供使用。*
 
 &emsp;
 
@@ -116,34 +116,34 @@ $$
 
 <font color="#0000dd">**3.1. 目标网络知识滤除**</font>
 
-在知识存储阶段，需要去除目标网络中存储集 $\mathcal{D}_r$ 的知识同时保持保留集 $\overline{\mathcal{D}}_r$ 上的性能。
+在知识存储阶段，需要去除目标网络中存储集 $\mathcal{D}_ r$ 的知识同时保持保留集 $\overline{\mathcal{D}}_ r$ 上的性能。
 
 &emsp;
 
-首先，作者将原始网络 $\mathcal{T}_0$ 在第 $n$ 个模块处分为浅层模块 $\mathcal{T}_0^{(-n)}$ 和 深层模块 $\mathcal{T}_0^{(n-)}$，同样在目标网络上也进行同样的划分：$\mathcal{T}=\mathcal{T}^{(-n)}\circ \mathcal{T}^{(n-)}$。
-依据该划分策略，作者将原始网络的深层模块完全迁移至目标网络的深层模块中，即 $\mathcal{T}^{(n-)}=\mathcal{T}_0^{(n-)}$。因此，接下来只需要进行从 $\mathcal{T}^{(-n)}$ 到 $\mathcal{T}_0^{(-n)}$ 的部分迁移操作。
+首先，作者将原始网络 $\mathcal{T}_ 0$ 在第 $n$ 个模块处分为浅层模块 $\mathcal{T}_ 0^{(-n)}$ 和 深层模块 $\mathcal{T}_ 0^{(n-)}$，同样在目标网络上也进行同样的划分：$\mathcal{T}=\mathcal{T}^{(-n)}\circ \mathcal{T}^{(n-)}$。
+依据该划分策略，作者将原始网络的深层模块完全迁移至目标网络的深层模块中，即 $\mathcal{T}^{(n-)}=\mathcal{T}_ 0^{(n-)}$。因此，接下来只需要进行从 $\mathcal{T}^{(-n)}$ 到 $\mathcal{T}_ 0^{(-n)}$ 的部分迁移操作。
 
 &emsp;
 
 **Sample-specific 知识去除：**
 需要在两个方面对 Sample-specific 知识进行去除。
-一是目标网络无法对存储集 $\mathcal{D}_r$ 做出正确的类别标签预测；二是存储集 $\mathcal{D}_r$ 的知识无法从目标网络 $\mathcal{T}$ 中蒸馏得。
+一是目标网络无法对存储集 $\mathcal{D}_ r$ 做出正确的类别标签预测；二是存储集 $\mathcal{D}_ r$ 的知识无法从目标网络 $\mathcal{T}$ 中蒸馏得。
 
 
-对于每个存储集的输入 $x\subset \mathcal{D}_r$，作者对其分配一个随机标签 $y_r$，以此微调目标网络 $\mathcal{T}$，使得目标网络在存储集上做出错误预测结构。
+对于每个存储集的输入 $x\subset \mathcal{D}_ r$，作者对其分配一个随机标签 $y_ r$，以此微调目标网络 $\mathcal{T}$，使得目标网络在存储集上做出错误预测结构。
 于此同时，作者最大化了目标网络和原始网络浅层模块中间特征的注意力图，用以消除该部分知识的可蒸馏性。该部分损失表示为：
-$$\mathcal{L}_{kr}= \mathcal{L}_{ce}\big(\mathcal{T}(x),y_r\big)-\lambda_{at} \mathcal{L}_{at}\big(\mathcal{T}^{(-n)}(x),\mathcal{T}_0^{(-n)}(x)\big)$$
+$$\mathcal{L}_ {kr}= \mathcal{L}_ {ce}\big(\mathcal{T}(x),y_r\big)-\lambda_{at} \mathcal{L}_ {at}\big(\mathcal{T}^{(-n)}(x),\mathcal{T}_ 0^{(-n)}(x)\big)$$
 
 &emsp;
 
 **General 知识保留：**
-目标网络需要保留两部分知识。一是保留集 $\overline{\mathcal{D}}_r$ 的所有知识，用于维持目标网络在保留集上的性能；
-二是来自 $\mathcal{D}_r$ 的一般性知识，通过保留部分不会泄漏存储集隐私的一般知识，提升目标网络在保留集上的性能。
+目标网络需要保留两部分知识。一是保留集 $\overline{\mathcal{D}}_ r$ 的所有知识，用于维持目标网络在保留集上的性能；
+二是来自 $\mathcal{D}_ r$ 的一般性知识，通过保留部分不会泄漏存储集隐私的一般知识，提升目标网络在保留集上的性能。
 
-由于目标网络 $\mathcal{T}$ 由原始网络初始化得，并且目标网络 $\mathcal{T}$ 的深层模块在微调时保持参数固定，因此部分知识已完成从 $\mathcal{T}_0^{(n-)}$ 到 $\mathcal{T}^{(n-)}$ 的迁移。
-除此之外，作者提出了基于滤波器 $g$ 的知识迁移，以防止在保留集 $\overline{\mathcal{D}}_r$ 上的灾难性遗忘，即：
+由于目标网络 $\mathcal{T}$ 由原始网络初始化得，并且目标网络 $\mathcal{T}$ 的深层模块在微调时保持参数固定，因此部分知识已完成从 $\mathcal{T}_ 0^{(n-)}$ 到 $\mathcal{T}^{(n-)}$ 的迁移。
+除此之外，作者提出了基于滤波器 $g$ 的知识迁移，以防止在保留集 $\overline{\mathcal{D}}_ r$ 上的灾难性遗忘，即：
 $$
-    \mathcal{L}_{kp} = \mathcal{L}_{kd}\big(g(\frac{z_{\mathcal{T}}(x)}{T}),g(\frac{z_{\mathcal{T}_{0}}(x)}{T})\big),
+    \mathcal{L}_ {kp} = \mathcal{L}_ {kd}\big(g(\frac{z_ {\mathcal{T}}(x)}{T}),g(\frac{z_ {\mathcal{T}_ {0}}(x)}{T})\big),
 $$
 公式中，过滤器 $g$ 起到选择保留集对应的类别标签的 logits的效果。
 
@@ -157,17 +157,17 @@ $$
 
 为了减小存储模块的参数规模，作者使用剪枝后的原始网络初始化存款模块 $\mathcal{T}_r$。此外，作者使用基于过滤器 $\overline{g}$ 的损失函数 $\mathcal{L}_{pt}$ 进行部分知识转移：
 $$
-    \mathcal{L}_{pt} = \mathcal{L}_{kd}\big(\overline{g}(\frac{z_{\mathcal{T}_r\circ\mathcal{T}^{(n-)}}(x)}{T}),\overline{g}(\frac{z_{\mathcal{T}_{0}}(x)}{T})\big), 
+    \mathcal{L}_ {pt} = \mathcal{L}_ {kd}\big(\overline{g}(\frac{z_ {\mathcal{T}_ r\circ\mathcal{T}^{(n-)}}(x)}{T}),\overline{g}(\frac{z_ {\mathcal{T}_ {0}}(x)}{T})\big), 
 $$
 公式中，过滤器 $\overline{g}$ 起到选择存储集对应的类别标签的 logits的效果。
 
 &emsp;
 
-通过最小化损失 $\mathcal{L}_{pt}$，可以将特定样本的知识转移到存储模块。同时为了确保存储的知识易于后续的恢复操作，作者进一步微调存储模块 $\mathcal{T}_r$，使其 easy-to-withdraw。这意味着对于恢复网络 $\widetilde{{\mathcal{T}}}$，知识是可恢复的。因此，在进行知识存储的同时，作者提前考虑其在复原网络 $\mathcal{L}_{re}$ 上的可恢复性。具体来说，额外引入了与复原网络相关的损失项：
+通过最小化损失 $\mathcal{L}_ {pt}$，可以将特定样本的知识转移到存储模块。同时为了确保存储的知识易于后续的恢复操作，作者进一步微调存储模块 $\mathcal{T}_ r$，使其 easy-to-withdraw。这意味着对于恢复网络 $\widetilde{{\mathcal{T}}}$，知识是可恢复的。因此，在进行知识存储的同时，作者提前考虑其在复原网络 $\mathcal{L}_ {re}$ 上的可恢复性。具体来说，额外引入了与复原网络相关的损失项：
 $$
-\mathcal{L}_{re} = \mathcal{L}_{ce}\big(\widetilde{{\mathcal{T}}}(x),y\big),
+\mathcal{L}_ {re} = \mathcal{L}_ {ce}\big(\widetilde{{\mathcal{T}}}(x),y\big),
 $$
-在这里，得到的存储模块只用于知识的存储，不能用作独立的预测模型。 因此，敏感知识存储在 $\mathcal{T}_r$ 中比保留原始图像更为安全。
+在这里，得到的存储模块只用于知识的存储，不能用作独立的预测模型。 因此，敏感知识存储在 $\mathcal{T}_ r$ 中比保留原始图像更为安全。
 
 &emsp;
 
@@ -180,19 +180,19 @@ $$
 具体来说，复原网络的组织形式可被表示为：
 
 $$
-\widetilde{{\mathcal{T}}}(x)=g\big (\mathcal{T}(x)\big)+ \overline{g}\big ( \mathcal{T}_r\circ\mathcal{T}^{(n-)}(x)\big),
+\widetilde{{\mathcal{T}}}(x)=g\big (\mathcal{T}(x)\big)+ \overline{g}\big ( \mathcal{T}_ r\circ\mathcal{T}^{(n-)}(x)\big),
 $$
 过滤函数 $g$ 和 $\overline{g}$ 与之前的定义一致。因此训练 LIRF 的损失函数可以表示为各损失项的加权相加：
 $$
-\mathcal{L}_{all}= \mathcal{L}_{kr}+\lambda_{kp}\mathcal{L}_{kp}+\lambda_{re}\mathcal{L}_{re}+\lambda_{pt}\mathcal{L}_{pt},
+\mathcal{L}_ {all}= \mathcal{L}_{kr}+\lambda_{kp}\mathcal{L}_ {kp}+\lambda_{re}\mathcal{L}_ {re}+\lambda_ {pt}\mathcal{L}_ {pt},
 $$
-LIRF 通过在存储集 $\mathcal{D}_r$ 上的 $\mathcal{L}_{all}$ 进行网络微调，保留集 $\overline{\mathcal{D}}_r$ 全程不参与网络更新。
+LIRF 通过在存储集 $\mathcal{D}_ r$ 上的 $\mathcal{L}_ {all}$ 进行网络微调，保留集 $\overline{\mathcal{D}}_ r$ 全程不参与网络更新。
 
 &emsp;
 
-值得注意的是，虽然 LIRF 中的目标网络进行了部分数据遗忘，但其优化目标与 machine unlearning 不同。machine unlearning 旨在获得一个与使用数据 $\overline{\mathcal{D}}_r$ 重新训练结果一致的目标网络。
-而在 LIRF 中，目标网络的知识容量大于仅使用 $\overline{ \mathcal{D}}_r$ 训练的网络，因为它包含存储集 $\mathcal{D}_r$ 的一般性知识。 只有与隐私相关的敏感知识保留在存储模块中。
-在知识恢复时，复原网络 $\widetilde{\mathcal{T}}$ 不会被强制逼近原网络：$\widetilde{\mathcal {T}}\neq\mathcal{T}_0$。 实际上，LIRF 中包含多种知识迁移形式，复原网络的性能相较于原始网络有进一步的性能提升。
+值得注意的是，虽然 LIRF 中的目标网络进行了部分数据遗忘，但其优化目标与 machine unlearning 不同。machine unlearning 旨在获得一个与使用数据 $\overline{\mathcal{D}}_ r$ 重新训练结果一致的目标网络。
+而在 LIRF 中，目标网络的知识容量大于仅使用 $\overline{ \mathcal{D}}_ r$ 训练的网络，因为它包含存储集 $\mathcal{D}_ r$ 的一般性知识。 只有与隐私相关的敏感知识保留在存储模块中。
+在知识恢复时，复原网络 $\widetilde{\mathcal{T}}$ 不会被强制逼近原网络：$\widetilde{\mathcal {T}}\neq\mathcal{T}_ 0$。 实际上，LIRF 中包含多种知识迁移形式，复原网络的性能相较于原始网络有进一步的性能提升。
 
 &emsp;
 
